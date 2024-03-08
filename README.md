@@ -13,7 +13,7 @@ To reproduce:
 
 
 This is 100% caused by setting an explicit ID on the view:
-´´´swift
+```swift
             ContentView()
                 .id(value) // <-- issue
 ```
