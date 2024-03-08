@@ -7,19 +7,38 @@
 
 import SwiftUI
 
+class MyState: ObservableObject {
+    let value: String
+
+    init(value: String) {
+        self.value = value
+        print("MyState()")
+    }
+}
+
 struct ContentView: View {
     @Environment(\.openWindow) private var openWindow
+
+    @StateObject private var myState: MyState
+
+    init(value: String) {
+        _myState = StateObject(wrappedValue: MyState(value: value))
+    }
 
     var body: some View {
         NavigationSplitView {
             Text("Sidebar")
         } content: {
-            Text("Content")
+            Text(myState.value)
+                .font(.title)
             Button("Open Window A", action: {
                 openWindow(value: "A")
             })
             Button("Open Window B", action: {
                 openWindow(value: "B")
+            })
+            Button("Open Window C", action: {
+                openWindow(value: "C")
             })
             .toolbar {
                 ToolbarItem {
@@ -38,5 +57,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(value: "demo")
 }

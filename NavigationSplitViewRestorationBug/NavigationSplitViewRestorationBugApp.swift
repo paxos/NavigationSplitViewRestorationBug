@@ -11,9 +11,8 @@ import SwiftUI
 struct NavigationSplitViewRestorationBugApp: App {
     var body: some Scene {
         WindowGroup(for: String.self) { $value in
-            ContentView()
-
-                .id(value)
+            ContentView(value: value)
+//                .id(value)
         } defaultValue: {
             "A"
         }
