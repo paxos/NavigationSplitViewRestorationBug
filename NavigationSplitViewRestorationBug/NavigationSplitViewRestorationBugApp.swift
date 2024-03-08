@@ -10,10 +10,13 @@ import SwiftUI
 @main
 struct NavigationSplitViewRestorationBugApp: App {
     var body: some Scene {
+        
         WindowGroup(for: String.self) { $value in
-            ContentView(value: value)
+            print("ContentView(\(value))")
+            return ContentView(value: value)
 //                .id(value)
         } defaultValue: {
+            // It seems each window is restored with the default value, and then the value is actually set after
             "A"
         }
     }

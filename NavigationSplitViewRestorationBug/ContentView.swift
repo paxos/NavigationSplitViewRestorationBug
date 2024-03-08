@@ -7,22 +7,26 @@
 
 import SwiftUI
 
-class MyState: ObservableObject {
-    let value: String
+@Observable
+class MyState {
+    var value: String
 
     init(value: String) {
         self.value = value
-        print("MyState()")
+        print("MyState(\(value))")
     }
 }
 
 struct ContentView: View {
     @Environment(\.openWindow) private var openWindow
 
-    @StateObject private var myState: MyState
+    @State private var myState: MyState
+    let value: String
 
     init(value: String) {
-        _myState = StateObject(wrappedValue: MyState(value: value))
+//        print("ContentView called with \(value)")
+        _myState = State(wrappedValue: MyState(value: value))
+        self.value = value
     }
 
     var body: some View {
@@ -53,6 +57,15 @@ struct ContentView: View {
                     }
                 }
         }
+       
+        .onChange(of: value, {
+            myState.value = value
+        })
+//        .onAppear {
+//            print("\(value) vs \(myState.value)")
+//            myState.value = value
+//        }
+       
     }
 }
 
